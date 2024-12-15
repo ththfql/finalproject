@@ -1,31 +1,33 @@
-# 피보나치 수열을 구하는 재귀 함수
-def fibonacci(n):
-    # 기본 조건: 0번째 또는 1번째 수는 n 자체를 반환
+# 기존의 재귀 방식으로 피보나치 수열을 구하는 함수
+def fibonacci_recursive(n):
     if n == 0 or n == 1:
         return n
     else:
-        # 재귀적으로 두 개의 이전 숫자를 더함
-        return fibonacci(n-2) + fibonacci(n-1)
+        return fibonacci_recursive(n-1) + fibonacci_recursive(n-2)
 
-# 사용자가 시작과 끝 범위를 입력하면, 해당 범위에 해당하는 피보나치 수열을 출력하는 함수
-def fibonacci_range(start, end):
-    # 피보나치 수열을 담을 리스트
-    sequence = []
-    # 사용자가 입력한 범위에 맞춰 피보나치 수열을 구함
-    for i in range(start, end):
-        sequence.append(fibonacci(i))  # 해당 인덱스의 피보나치 수를 추가
-    return sequence
+# 동적 프로그래밍 방식으로 피보나치 수열을 구하는 함수
+def fibonacci_dp(n):
+    # 피보나치 수열의 0번째 항과 1번째 항을 미리 설정합니다.
+    fib = [0, 1]
+    for i in range(2, n + 1):
+        fib.append(fib[i-1] + fib[i-2])  # fib[i]는 fib[i-1] + fib[i-2]로 계산
+    return fib[n]
 
-# 사용자에게 범위를 입력받음
-print("피보나치 수열을 출력할 범위를 입력하세요.")
-start = int(input("시작 인덱스를 입력하세요 (예: 0): "))
-end = int(input("끝 인덱스를 입력하세요 (예: 10): "))
+# 사용자로부터 피보나치 수를 구할 항의 번호와 계산 방법을 입력받음
+numero = int(input("피보나치 수열에서 원하는 항의 번호를 입력하세요: "))
 
-# 범위가 유효한지 확인
-if start < 0 or end <= start:
-    print("유효한 범위를 입력하세요!")
+# n번째 항이 0 이하인 경우는 피보나치 수열에 해당하지 않으므로 오류 메시지를 출력합니다.
+if numero < 0:
+    print("잘못된 입력입니다. 양의 정수를 입력하세요.")
 else:
-    # 피보나치 수열 출력
-    result = fibonacci_range(start, end)
-    print(f"{start}번째부터 {end-1}번째까지의 피보나치 수열: {result}")
-
+    # 계산 방법 선택: 재귀 방식 또는 동적 프로그래밍 방식
+    method = input("어떤 방식으로 계산하시겠습니까? (1: 재귀, 2: 동적 프로그래밍): ")
+    
+    if method == '1':
+        # 재귀 방식으로 피보나치 수를 계산
+        print(f"{numero}번째 피보나치 수 (재귀 방식): {fibonacci_recursive(numero)}")
+    elif method == '2':
+        # 동적 프로그래밍 방식으로 피보나치 수를 계산
+        print(f"{numero}번째 피보나치 수 (동적 프로그래밍 방식): {fibonacci_dp(numero)}")
+    else:
+        print("잘못된 입력입니다. 1 또는 2를 선택해주세요.")
