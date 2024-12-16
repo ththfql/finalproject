@@ -59,11 +59,12 @@ def is_prime(num):
     return True
 
 # 피보나치 수열에서 소수만 출력하는 함수
-def fibonacci_primes(n):
+def fibonacci_primes_in_range(start, end):
     fib = [0, 1]
-    while fib[-1] < n:  # 수열의 마지막 값이 끝 범위를 초과하기 전까지 반복
+    while fib[-1] < end:  # 수열의 마지막 값이 끝 범위를 초과하기 전까지 반복
         fib.append(fib[-1] + fib[-2])  # 다음 항 계산 및 추가
-    primes_in_fib = [x for x in fib if is_prime(x)]  # 피보나치 수열에서 소수만 필터링
+    # 주어진 범위 내에서 피보나치 수열 항들 중 소수만 필터링
+    primes_in_fib = [x for x in fib if start <= x <= end and is_prime(x)]
     return primes_in_fib  # 소수만 반환
 
 # 메인 실행
@@ -103,8 +104,9 @@ if __name__ == "__main__":
         print(f"피보나치 수열 ({start} ~ {end})의 총합: {result}")
 
     elif mode == 5:
-        n = int(input("피보나치 수열에서 원하는 범위의 숫자까지 소수를 출력하려면 범위를 입력하세요: "))
-        result = fibonacci_primes(n)  # 피보나치 수열에서 소수만 필터링
+        start = int(input("소수를 출력할 피보나치 수열의 시작 범위를 입력하세요: "))
+        end = int(input("소수를 출력할 피보나치 수열의 끝 범위를 입력하세요: "))
+        result = fibonacci_primes_in_range(start, end)  # 범위 내 소수 출력
         print(f"피보나치 수열 내 소수들: {result}")
 
     else:
