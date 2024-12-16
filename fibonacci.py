@@ -49,10 +49,27 @@ def fibonacci_sum(start, end):
     fib_in_range = [x for x in fib if start <= x <= end]
     return sum(fib_in_range)  # 지정된 범위 내의 피보나치 수들의 합 반환
 
+# 소수 판별 함수
+def is_prime(num):
+    if num <= 1:
+        return False
+    for i in range(2, int(math.sqrt(num)) + 1):
+        if num % i == 0:
+            return False
+    return True
+
+# 피보나치 수열에서 소수만 출력하는 함수
+def fibonacci_primes(n):
+    fib = [0, 1]
+    while fib[-1] < n:  # 수열의 마지막 값이 끝 범위를 초과하기 전까지 반복
+        fib.append(fib[-1] + fib[-2])  # 다음 항 계산 및 추가
+    primes_in_fib = [x for x in fib if is_prime(x)]  # 피보나치 수열에서 소수만 필터링
+    return primes_in_fib  # 소수만 반환
+
 # 메인 실행
 if __name__ == "__main__":
     print("=== 피보나치 수열 계산기 ===")
-    mode = int(input("원하는 기능을 선택하세요 (1: 범위 출력, 2: n번째 항 계산, 3: 특정 숫자 확인, 4: 범위 내 총합 계산): "))
+    mode = int(input("원하는 기능을 선택하세요 (1: 범위 출력, 2: n번째 항 계산, 3: 특정 숫자 확인, 4: 범위 내 총합 계산, 5: 피보나치 수열에서 소수만 출력): "))
 
     if mode == 1:
         start = int(input("피보나치 수열의 시작 범위를 입력하세요: "))
@@ -84,6 +101,11 @@ if __name__ == "__main__":
         end = int(input("피보나치 수열의 끝 범위를 입력하세요: "))
         result = fibonacci_sum(start, end)
         print(f"피보나치 수열 ({start} ~ {end})의 총합: {result}")
+
+    elif mode == 5:
+        n = int(input("피보나치 수열에서 원하는 범위의 숫자까지 소수를 출력하려면 범위를 입력하세요: "))
+        result = fibonacci_primes(n)  # 피보나치 수열에서 소수만 필터링
+        print(f"피보나치 수열 내 소수들: {result}")
 
     else:
         print("잘못된 입력입니다.")
