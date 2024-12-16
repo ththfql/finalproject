@@ -11,7 +11,7 @@ def fibonacci_dp(n):
     fib = [0, 1]
     for i in range(2, n + 1):
         fib.append(fib[i-1] + fib[i-2])  # fib[i]는 fib[i-1] + fib[i-2]로 계산
-    return fib[n]
+    return fib[n], fib  # n번째 피보나치 수와 수열 반환
 
 # 사용자로부터 피보나치 수를 구할 항의 번호와 계산 방법을 입력받음
 numero = int(input("피보나치 수열에서 원하는 항의 번호를 입력하세요: "))
@@ -26,8 +26,13 @@ else:
     if method == '1':
         # 재귀 방식으로 피보나치 수를 계산
         print(f"{numero}번째 피보나치 수 (재귀 방식): {fibonacci_recursive(numero)}")
+        
     elif method == '2':
         # 동적 프로그래밍 방식으로 피보나치 수를 계산
-        print(f"{numero}번째 피보나치 수 (동적 프로그래밍 방식): {fibonacci_dp(numero)}")
+        fib_num, fib_sequence = fibonacci_dp(numero)
+        print(f"{numero}번째 피보나치 수 (동적 프로그래밍 방식): {fib_num}")
+        print(f"피보나치 수열 ({numero}번째 항까지): {fib_sequence}")
+        print(f"피보나치 수열의 합: {sum(fib_sequence)}")
     else:
         print("잘못된 입력입니다. 1 또는 2를 선택해주세요.")
+
